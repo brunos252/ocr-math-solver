@@ -18,8 +18,8 @@ translate_key = {0: "(", 1: ")", 2: "+", 3: "-", 4: "0", 5: "1", 6: "2", 7: "3",
 def scale_pixels(data):
     """normalize pixels to range 0-1"""
     data_norm = data.astype('float32')
-    data = data / 255.0
-    return data
+    data_norm = data_norm / 255.0
+    return data_norm
 
 
 def define_model():
@@ -47,7 +47,7 @@ def run_train():
     _, acc = model.evaluate(testX, testY, verbose=0)
     print('> %.3f' % (acc * 100.0))
 
-    model.save("./classifier/saved_model")
+    model.save("./classifier/model.h5")
 
 
 def predict(image):
@@ -58,7 +58,7 @@ def predict(image):
     image = scale_pixels(image)
     image = image.reshape((1, model_input_shape[0], model_input_shape[1], 1))
 
-    model = keras.models.load_model("./classifier/saved_model")
+    model = keras.models.load_model("./classifier/model.h5")
 
     evl = model.predict_step(image)
     char = translate_key[int(tf.math.argmax(evl, 1))]
