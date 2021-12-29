@@ -1,8 +1,4 @@
 import keras.models
-from numpy import mean
-from numpy import std
-from matplotlib import pyplot as plt
-from sklearn.model_selection import KFold
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import MaxPooling2D
@@ -12,7 +8,6 @@ from tensorflow.keras.optimizers import SGD
 import tensorflow as tf
 from classifier.dataset import load_dataset
 
-import utils
 
 model_input_shape = (45, 45, 1)
 model_classes_number = 17
