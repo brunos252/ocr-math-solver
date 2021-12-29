@@ -1,5 +1,5 @@
 def evaluate_postfix(tokens):
-    """evaluate expression written in postfix notation, returns a number
+    """evaluate expression written in postfix notation, returns a number.
     tokens should be an iterable of strings (operators and numbers)"""
     stack = []
     for token in tokens:
@@ -12,7 +12,7 @@ def evaluate_postfix(tokens):
                 stack.append(a + b)
             elif token == "-":
                 stack.append(a - b)
-            elif token == "*":
+            elif token == "x":
                 stack.append(a * b)
             elif token == "/":
                 stack.append(a / b)
@@ -21,7 +21,7 @@ def evaluate_postfix(tokens):
 
 
 def shunting_yard(tokens):
-    """transform infix (normal) expression notation to postfix notation
+    """transform infix (normal) expression notation to postfix notation.
     tokens should be an iterable of strings (operators and numbers)"""
     queue = []
     stack = []
@@ -35,8 +35,11 @@ def shunting_yard(tokens):
                 queue.append(stack.pop())
             stack.pop()
         else:
-            if token == "+" or token == "-":
-                while len(stack) > 0 and (stack[-1] == "*" or stack[-1] == "/"):
+            if token == "*" or token == "/":
+                while len(stack) > 0 and (stack[-1] == "x" or stack[-1] == "/"):
+                    queue.append(stack.pop())
+            elif token == "+" or token == "-":
+                while len(stack) > 0 and (stack[-1] == "x" or stack[-1] == "/" or stack[-1] == "+" or stack[-1] == "-"):
                     queue.append(stack.pop())
             stack.append(token)
 
